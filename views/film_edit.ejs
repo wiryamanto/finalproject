@@ -1,0 +1,37 @@
+<body>
+    
+</body><!DOCTYPE html>
+<html lang="en">
+<head>
+  <title><%= title %></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+ 
+<div class="container">
+  <h2><%= title %></h2>
+  <form action="/update" method="post">
+    <input type="hidden" value="<%= film.id_film%>" name="id_film">
+    <div class="form-group">
+        <label for="judul_film">judul:</label>
+        <input type="text" class="form-control" id="judul_film" placeholder="Enter judul" value="<%= film.judul_film%>" name="judul_film" required>
+    </div>
+    <div class="form-group">
+        <label for="rating">rating:</label>
+        <input type="number" class="form-control" id="rating" placeholder="Enter rating" value="<%=film.rating%>" name="rating" required>
+    </div>
+    <div class="from-group">
+        <label for="tahun_rilis">tahun rilis</label>
+        <input type="number" class="form-control" id="tahun_rilis" placeholder="Enter tahun_rilis" value="<%=film.tahun_rilis%>" name="tahun_rilis" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+ 
+</body>
+</html>
