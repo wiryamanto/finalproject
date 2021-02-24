@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <title><%= title%> </title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+      </head>
+      <body>
+        
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container">
+          <a class="navbar-brand" href="#">Movie</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ml-auto">
+              <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-item nav-link" href="/category_film">category film</a>
+              <a class="nav-item nav-link" href="/list_film">list film</a>
+              <a class="nav-item nav-link" href="/category_list">list category</a>
+            </div>
+          </div>
+        </div>
+        </nav>
+        <div class="container">
+            <h2 class="text-center mt-4 mb-5">Category Film</h2>
+          <div class="row">
+            <% categorys.forEach(function(category){%>
+              <div class="col">
+                  <div class="card" style="width: 18rem;">
+                    <div class="row">
+                        <div class="col">
+                            <img class="card-img-top" src="https://designshack.net/wp-content/uploads/placeholder-image.png" width="20" >
+                        </div>
+                        <div class="col">
+                            <h4 class="card-title"><%= category.name_category %></h4>
+                        </div>
+                    </div>
+                    </div>
+              </div>
+            <% }) %>
+          </div>
+          
+            
+      </div>
+      </body>
+
+
+</html>

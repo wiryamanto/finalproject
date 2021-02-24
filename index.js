@@ -4,12 +4,14 @@ const bodyParser = require ('body-parser');
 const path = require ("path");
 const mysql = require('mysql');
 
+
 const connection=mysql.createConnection({
     host:'localhost',
     user:'root',
     password:'',
     database:'final_express'
 });
+
 
 connection.connect(function(err){
     if(err) console.log(error);
@@ -22,7 +24,20 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
+
 app.get('/',(req, res)=>{
+    let sql ="SELECT * FROM film";
+    connection.query(sql,(err, rows)=>{
+        // console.log(rows);
+        if(err) throw err;
+        res.render('home',{
+            title : 'CRUD Express',
+            movies:rows
+        });
+    });
+});
+
+app.get('/list_film',(req, res)=>{
     let sql ="SELECT * FROM film";
     connection.query(sql,(err, rows)=>{
         // console.log(rows);
@@ -34,9 +49,37 @@ app.get('/',(req, res)=>{
     });
 });
 
+app.get('/category_list',(req,res)=>{
+    let sql =" select * from category";
+    connection.query(sql,(err, rows)=>{
+        if(err) throw err;
+        res.render('category_index',{
+            title : 'list category',
+            categorys : rows
+        })
+    })
+})
+
+app.get('/category_film',(req, res)=>{
+    let sql ="select * from category";
+    connection.query(sql,(err, rows)=>{
+        if(err) throw err;
+        res.render('category_film',{
+            title : 'category_film',
+            categorys : rows
+        })
+    });
+});
+
 app.get('/add',(req, res)=>{
     res.render('film_add',{
         title: 'Tambah film'
+    });
+} );
+
+app.get('/add_Category',(req, res)=>{
+    res.render('category_add',{
+        title: 'Tambah category'
     });
 } );
 
@@ -54,6 +97,19 @@ app.post('/save',(req, res)=>{
     });
 });
 
+app.post('/save_category',(req, res)=>{
+    console.log(req);
+    let data ={ 
+        name_category: req.body.category
+    };
+    let sql ="INSERT INTO category SET ?";
+    let query = connection.query(sql, data,(err, result)=>{
+        if(err) throw err;
+        res.redirect('/category_list');
+    });
+});
+
+
 app.get('/edit/:filmId',(req, res)=>{
     const filmId = req.params.filmId;
     let sql ="Select * from film where id_film =" + filmId+"" ;
@@ -61,11 +117,23 @@ app.get('/edit/:filmId',(req, res)=>{
         if(err) throw err;
         console.log(result[0]);
         res.render('film_edit', {
-            title: 'Edit data',
+            title: 'Edit film',
             film: result[0]
         });
     });
 });
+
+app.get('/edit_category/:id',(req,res)=>{
+    const idCategory = req.params.id;
+    let sql ="select * from category where id_category =" +idCategory+"";
+    connection.query(sql,(err,result)=>{
+        if(err) throw err;
+        res.render('edit_category',{
+            title : 'solve',
+            categorys: result[0]           
+        })
+    })
+})
 
 app.post('/update',(req,res)=>{
     console.log(req.body);
@@ -79,12 +147,35 @@ app.post('/update',(req,res)=>{
     });
 });
 
+app.post('/update_category',(req,res)=>{
+    console.log(req.body);
+    const body = {
+        name_category: req.body.category
+    }
+    const id = req.body.id;
+    let sql = "UPDATE category SET ? WHERE id_category =" + id +"";
+    // let sql= "update user set nama='"+req.body.nama+"', email='"+req.body.email+"', telp='"+req.body.telp+"' where id =" + userId;
+    let query= connection.query(sql, body, (err, result)=>{
+        if(err)throw err;
+        res.redirect('/category_film');
+    });
+});
+
 app.get('/delete/:filmId',(req,res)=>{
     const filmId = req.params.filmId;
     let sql = `DELETE from film where id_film = ${filmId}`;
     let query = connection.query(sql,(err, result)=>{
         if(err) throw err;
         res.redirect('/');
+    });
+});
+
+app.get('/delete_category/:id',(req,res)=>{
+    const id = req.params.id;
+    let sql = `DELETE from category where id_category = ${id}`;
+    let query = connection.query(sql,(err, result)=>{
+        if(err) throw err;
+        res.redirect('/category_list');
     });
 });
 
