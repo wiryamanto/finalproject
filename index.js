@@ -105,7 +105,7 @@ app.post('/save_category',(req, res)=>{
     let sql ="INSERT INTO category SET ?";
     let query = connection.query(sql, data,(err, result)=>{
         if(err) throw err;
-        res.redirect('/category_list');
+        res.redirect('/category_film');
     });
 });
 
