@@ -31,6 +31,7 @@
           <div class="row">
             <% categorys.forEach(function(category){%>
               <div class="col">
+                <a href="/category_film/<%= category.id_category %>">
                   <div class="card" style="width: 18rem;">
                     <div class="row">
                         <div class="col">
@@ -41,6 +42,7 @@
                         </div>
                     </div>
                     </div>
+                  </a>
               </div>
             <% }) %>
           </div>

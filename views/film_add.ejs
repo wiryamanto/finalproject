@@ -48,7 +48,7 @@
             type="text"
             class="form-control"
             id="judul_film"
-            placeholder="Enter judul"
+            placeholder=" judul"
             name="judul_film"
             required
           />
@@ -59,7 +59,7 @@
             type="number"
             class="form-control"
             id="rating"
-            placeholder="Enter rating"
+            placeholder=" rating"
             name="rating"
             required
           />
@@ -70,10 +70,18 @@
             type="number"
             class="form-control"
             id="tahun_rilis"
-            placeholder="Enter tahun_rilis"
+            placeholder=" tahun_rilis"
             name="tahun_rilis"
             required
           />
+        </div>
+        <div class="form-group">
+          <label for="tahun_rilis">name kategori</label>
+          <select class="form-control" name="id_category" id="exampleFormControlSelect1">
+            <% categorys.forEach(function(kategori){%>
+            <option value="<%=kategori.id_category%>"><%=kategori.name_category %></option>
+          <%})%> 
+          </select>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>

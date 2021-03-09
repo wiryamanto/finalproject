@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 
 
 app.get('/',(req, res)=>{
-    let sql ="SELECT * FROM film";
+    let sql ="SELECT * FROM film join category on film.id_category = category.id_category";
     connection.query(sql,(err, rows)=>{
         // console.log(rows);
         if(err) throw err;
@@ -38,7 +38,7 @@ app.get('/',(req, res)=>{
 });
 
 app.get('/list_film',(req, res)=>{
-    let sql ="SELECT * FROM film";
+    let sql ="SELECT * FROM film join category on film.id_category = category.id_category";
     connection.query(sql,(err, rows)=>{
         // console.log(rows);
         if(err) throw err;
@@ -72,9 +72,14 @@ app.get('/category_film',(req, res)=>{
 });
 
 app.get('/add',(req, res)=>{
-    res.render('film_add',{
-        title: 'Tambah film'
-    });
+    let sql ="select * from category";
+    connection.query(sql,(err, rows)=>{
+        if(err) throw err;
+        res.render('film_add',{
+            title: 'tambah film',
+            categorys:rows
+        })
+    })
 } );
 
 app.get('/add_Category',(req, res)=>{
@@ -88,7 +93,8 @@ app.post('/save',(req, res)=>{
     let data ={ 
         judul_film: req.body.judul_film, 
         rating:req.body.rating, 
-        tahun_rilis:req.body.tahun_rilis
+        tahun_rilis:req.body.tahun_rilis,
+        id_category:req.body.id_category
     };
     let sql ="INSERT INTO film SET ?";
     let query = connection.query(sql, data,(err, result)=>{
@@ -178,6 +184,19 @@ app.get('/delete_category/:id',(req,res)=>{
         res.redirect('/category_list');
     });
 });
+
+app.get('/category_film/:id_category',(req,res)=>{
+    const id_category = req.params.id_category;
+    let sql = `select * from film where id_category = '${id_category}'`
+    let query = connection.query(sql,(err,result)=>{
+        if(err) throw err;
+        res.render('view_film', {
+            title:'view film',
+            movies:result
+
+        });
+    })
+})
 
 
 app.listen(3000, ()=>{
